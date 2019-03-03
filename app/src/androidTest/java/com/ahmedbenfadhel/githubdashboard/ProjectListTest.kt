@@ -31,7 +31,7 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class UserLocalModelTest : AndroidJUnitRunner() {
+class ProjectListTest : AndroidJUnitRunner() {
 
     @get:Rule
     var activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
