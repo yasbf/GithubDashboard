@@ -14,11 +14,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ahmedbenfadhel.githubdashboard.BuildConfig
 import com.ahmedbenfadhel.githubdashboard.R
 import com.ahmedbenfadhel.githubdashboard.data.local.GithubDatabase
-import com.ahmedbenfadhel.githubdashboard.data.local.dao.ProjectDao
-import com.ahmedbenfadhel.githubdashboard.data.local.dao.UserDao
+import com.ahmedbenfadhel.githubdashboard.data.remote.NetworkService
 import com.ahmedbenfadhel.githubdashboard.data.remote.model.Project
 import com.ahmedbenfadhel.githubdashboard.data.repository.GithubRepository
 import com.ahmedbenfadhel.githubdashboard.databinding.FragmentProjectListBinding
@@ -30,12 +28,6 @@ import kotlinx.android.synthetic.main.fragment_project_list.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.Cache
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
 
 
 /**
@@ -50,27 +42,6 @@ class ProjectListFragment : Fragment() {
     private lateinit var viewModelFactory: ProjectListViewModelFactory
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var binding: FragmentProjectListBinding
-
-    private val cacheSize = 10 * 1024 * 1024 // 10 MB
-    private val httpCacheDirectory = File(activity?.cacheDir, "http-cache")
-    private val cache = Cache(httpCacheDirectory, cacheSize.toLong())
-
-    private val loggingInterceptor = HttpLoggingInterceptor()
-
-    private val httpClient = OkHttpClient.Builder()
-        .cache(cache)
-        .addInterceptor(loggingInterceptor)
-        .build()
-
-    private val service = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(httpClient)
-        .build()
-    private val githubService = service.create(com.ahmedbenfadhel.githubdashboard.data.remote.GitHubService::class.java)
-    private var db: GithubDatabase? = null
-    private lateinit var userDao: UserDao
-    private lateinit var projectDao: ProjectDao
 
     private val projectClickCallback = object : ProjectClickCallback {
         override fun onClick(project: Project) {
@@ -103,9 +74,11 @@ class ProjectListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        db = GithubDatabase.getDataBase(activity!!.applicationContext)
-        userDao = db!!.userDao()
-        projectDao = db!!.projectDao()
+        val db = GithubDatabase.getDataBase(activity!!.applicationContext)
+        val userDao = db!!.userDao()
+        val projectDao = db.projectDao()
+        val githubService = NetworkService(context!!).service
+
         val repository = GithubRepository(githubService, userDao, projectDao)
         viewModelFactory = ProjectListViewModelFactory(repository)
         val viewModel = ViewModelProviders.of(this, viewModelFactory)
@@ -158,6 +131,6 @@ class ProjectListFragment : Fragment() {
     private fun isOnline(): Boolean {
         val cm = activity?.applicationContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val nInfo = cm.activeNetworkInfo
-        return nInfo != null && nInfo.isAvailable && nInfo.isConnected;
+        return nInfo != null && nInfo.isConnected
     }
 }
