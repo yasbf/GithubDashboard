@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Github Dashboard Sample</string>
+    <string name="search_hint">Username</string>
+    <string name="loading_projects">Loading projects &#8230;</string>
+    <string name="project_name">Name of the project</string>
+    <string name="project_list">Project List</string>
+    <string name="project_language">Project Language</string>
+    <string name="project_description">Project Description</string>
+    <string name="loading_project">Loading Project &#8230;</string>
+    <string name="user_not_found">User not found</string>
+    <string name="internet_access_error">Internet access error</string>
+    <string name="stars">Stars : %1$s</string>
+</resources>

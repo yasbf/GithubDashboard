@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable name="project" type="com.ahmedbenfadhel.githubdashboard.data.remote.model.Project"/>
+        <variable name="isLoading" type="Boolean"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:elevation="5dp"
+            android:background="@android:color/white">
+
+        <TextView
+                android:id="@+id/loading_project"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/loading_project"
+                android:textAlignment="center"
+                app:visibleGone="@{isLoading}"/>
+
+        <LinearLayout
+                android:layout_marginStart="@dimen/item_horizontal_margin"
+                android:layout_marginEnd="@dimen/item_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical"
+                app:visibleGone="@{!isLoading}">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@{project.owner.avatar_url}"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/project_name"
+                            android:gravity="center"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:text="@{project.owner.name}"
+                            android:textAlignment="center"
+                            android:paddingBottom="5dp"/>
+
+                    <TextView
+                            android:id="@+id/userurl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/darker_gray"
+                            android:contentDescription="@string/project_name"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:text="@{project.owner.html_url}"
+                            android:textAlignment="center"
+                            android:paddingBottom="5dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/project_name"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:text="@{project.name}"
+                    android:textAlignment="center"
+                    android:paddingBottom="5dp"/>
+
+            <TextView
+                    android:id="@+id/languages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/project_language"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:gravity="center"
+                    android:text="@{project.language}"/>
+
+            <TextView
+                    android:id="@+id/project_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="18dp"
+                    android:contentDescription="@string/project_description"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="@{project.description}"/>
+            <TextView
+                    android:id="@+id/stargazers_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="18dp"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="@{String.format(@string/stars, project.stargazers_count)}"/>
+
+            <TextView
+                    android:id="@+id/git_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="18dp"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="@{project.git_url}"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

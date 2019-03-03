@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="project" type="com.ahmedbenfadhel.githubdashboard.data.remote.model.Project"/>
+        <variable name="callback" type="com.ahmedbenfadhel.githubdashboard.view.callback.ProjectClickCallback"/>
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:onClick="@{() ->  callback.onClick(project)}"
+            android:layout_margin="@dimen/item_horizontal_margin">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_repo"/>
+
+        <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/project_name"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/project_text"
+                android:text="@{project.name}"/>
+    </LinearLayout>
+</layout>
