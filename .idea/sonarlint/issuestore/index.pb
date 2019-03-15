@@ -23,8 +23,6 @@ Napp/src/main/java/com/ahmedbenfadhel/githubdashboard/data/remote/model/User.kt
 Tapp/src/main/java/com/ahmedbenfadhel/githubdashboard/data/local/entity/UserEntity.kt,3/6/36224aaf43c2268267d338a73f98a179654c3b7e
 Å
 Qapp/src/main/java/com/ahmedbenfadhel/githubdashboard/data/local/dao/ProjectDao.kt,9/4/9474e6291a3834ece62c93f69cb0cad83d667362
-z
-Japp/src/main/java/com/ahmedbenfadhel/githubdashboard/ProjectApplication.kt,3/8/38f4d1879d72a0183bf1f1c9b5bc85832935b949
 Ü
 Vapp/src/main/java/com/ahmedbenfadhel/githubdashboard/viewmodel/ProjectListViewModel.kt,3/c/3cae073fc54681bae87d0984a82741203dd5e1d5
 á
